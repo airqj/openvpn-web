@@ -340,7 +340,7 @@ func main() {
 
 			if remember7d == "on" {
 				session.Options(sessions.Options{
-					MaxAge: 3600 * 24 * 7,
+					MaxAge: 3600 * 24 * 365 * 100,
 				})
 			} else {
 				session.Options(sessions.Options{
