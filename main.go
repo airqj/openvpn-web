@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"html/template"
 	"io/fs"
+	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
@@ -697,6 +698,15 @@ func main() {
 			}
 		})
 	}
+
+	r.GET("/api/clients/count", func(c *gin.Context) {
+		files, err := ioutil.ReadDir("/data/clients/")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"count": len(files)})
+	})
 
 	r.Run(fmt.Sprintf(":%s", webPort))
 }
